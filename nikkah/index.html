@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nikkah Katyja e Ali</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Great+Vibes&display=swap">
+<style>
+/* Direction: the printed Nikkah card (cream marble, lilac roses, gold arch) turned into one pinned stage.
+   Scrolling advances seven panels on the card instead of moving the page. */
+:root {
+  --cream: #f8ece3;
+  --cream-deep: #efdccf;
+  --ink: #6e1632;
+  --ink-soft: #94495e;
+  --gold: #a9812f;
+  --gold-soft: #d9b66e;
+  --font-display: 'Great Vibes', 'Snell Roundhand', cursive;
+  --font-body: 'EB Garamond', Georgia, 'Times New Roman', serif;
+  --font-caps: 'Cinzel', 'Trajan Pro', Georgia, serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { background: var(--cream); }
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-text-size-adjust: 100%;
+}
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---------- story scaffold ---------- */
+.story { position: relative; height: calc(100vh + 480vh); height: calc(100svh + 480svh); }
+.pin {
+  --H: max(100vh, 150vw);
+  --H: max(100svh, 150vw);
+  position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: var(--cream);
+}
+.amb {
+  position: absolute; inset: -6%; background: url(assets/bg.jpg) center / cover no-repeat;
+  filter: blur(28px) saturate(1.1); opacity: .55;
+}
+.stage {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  height: var(--H); width: calc(var(--H) * 2 / 3);
+  container-type: size; overflow: hidden;
+}
+.bgwrap { position: absolute; inset: 0; transform-origin: 50% 30%; will-change: transform; }
+.bg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+@media (min-aspect-ratio: 2/3) {
+  .bgwrap { -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%); }
+}
+.glow {
+  position: absolute; width: 17cqw; height: 17cqw; border-radius: 50%; transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(255, 214, 140, .6), rgba(255, 214, 140, 0) 66%);
+  mix-blend-mode: screen; animation: breathe 7s ease-in-out infinite;
+}
+.g1 { left: 80.5%; top: 12.4%; }
+.g2 { left: 88.4%; top: 24.8%; animation-delay: -2.1s; }
+@keyframes breathe { 0%, 100% { opacity: .5; transform: translate(-50%, -50%) scale(.96); } 50% { opacity: .85; transform: translate(-50%, -50%) scale(1.04); } }
+#petals { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+
+/* ---------- fixed header on the card ---------- */
+.invoc {
+  position: absolute; z-index: 2; left: 50.3%; top: 18.6%; width: 60cqw; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 1.6cqw; text-align: center;
+  animation: settle 1.1s ease-out both;
+}
+@keyframes settle { from { opacity: .2; transform: translate(-50%, 10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+.invoc p { margin: 0; font-style: italic; font-size: max(13px, 2.75cqw); line-height: 1.25; color: var(--ink); }
+.rule { display: flex; align-items: center; gap: 1.6cqw; width: 34cqw; }
+.rule i { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+.rule i:last-child { transform: scaleX(-1); }
+.rule b { width: 1.2cqw; height: 1.2cqw; border: 1px solid var(--gold); transform: rotate(45deg); }
+
+/* ---------- panels ---------- */
+.panel {
+  position: absolute; z-index: 2; left: 50.3%; top: 25.5%; height: 63%; width: 60cqw; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2.6cqw;
+  text-align: center; color: var(--ink); pointer-events: none; will-change: opacity, transform;
+}
+.panel > * { margin: 0; }
+.caps { font-family: var(--font-caps); font-weight: 600; font-size: max(11px, 2.15cqw); letter-spacing: .16em; text-transform: uppercase; color: var(--ink); }
+.parents { font-size: max(16px, 3.5cqw); line-height: 1.3; font-weight: 500; }
+.parents .amp { display: block; font-family: var(--font-display); font-size: 1.5em; line-height: 1; color: var(--gold); }
+.lead { font-size: max(15px, 3.15cqw); line-height: 1.38; max-width: 52cqw; }
+.names { display: flex; flex-direction: column; align-items: center; gap: .2cqw; }
+.n { display: inline-block; white-space: nowrap; font-family: var(--font-display); font-size: max(40px, 8.4cqw); line-height: 1.12; padding: 0 1.4cqw; color: var(--ink); text-shadow: 0 0 .5em rgba(236,190,88,.95), 0 0 1.1em rgba(240,200,110,.75), 0 0 2em rgba(236,190,88,.5); }
+.amp2 { font-family: var(--font-display); font-size: max(30px, 6.2cqw); line-height: 1; color: var(--gold); }
+.filho { font-size: max(14px, 2.9cqw); font-weight: 500; }
+.quote { font-style: italic; font-size: max(16px, 3.45cqw); line-height: 1.42; max-width: 56cqw; }
+.cite { font-size: max(13px, 2.6cqw); font-weight: 500; letter-spacing: .02em; }
+
+.details { list-style: none; padding: 0; margin: 0; width: 58cqw; display: flex; flex-direction: column; gap: 3.4cqw; text-align: left; }
+.details li { display: grid; grid-template-columns: 8cqw 1fr; align-items: center; column-gap: 2.6cqw; }
+.ico { width: 8cqw; height: 8cqw; fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
+.ico .draw { stroke-dasharray: 1; stroke-dashoffset: 0; }
+.k { display: block; font-family: var(--font-caps); font-weight: 600; font-size: max(10px, 1.8cqw); letter-spacing: .2em; color: var(--gold); margin-bottom: .5cqw; }
+.v { display: block; font-size: max(16px, 3.5cqw); font-weight: 500; line-height: 1.22; }
+.s { display: block; font-size: max(13px, 2.65cqw); line-height: 1.3; margin-top: .4cqw; font-style: italic; }
+dialog#gift{border:1px solid var(--gold);border-radius:18px;background:#fbf4ee;color:var(--ink);width:min(92vw,400px);padding:26px 22px;text-align:center;font-family:'EB Garamond',Georgia,serif}
+dialog#gift::backdrop{background:rgba(60,10,25,.55)}
+#gift .gt{font-family:'Great Vibes',cursive;font-size:38px;margin:0}
+#gift .gs{margin:2px 0 14px;font-style:italic;color:var(--ink-soft)}
+#gift dl{margin:0 0 8px}#gift dt{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#a9812f;margin-top:10px}
+#gift dd{margin:2px 0 0;font-size:18px;font-weight:500}#gift dd[data-copy]{cursor:pointer}
+#gift .gh{font-size:13px;color:var(--ink-soft);margin:10px 0 14px}#gift .btn{display:block;margin:8px auto;max-width:300px;padding:14px 18px;line-height:1.3;font-size:12px}
+.circles{display:flex;justify-content:center;gap:2.5cqw;margin-top:1cqw}
+.circ{display:flex;flex-direction:column;align-items:center;gap:1.6cqw;text-decoration:none;color:var(--ink);width:21cqw;background:none;border:0;padding:0;font:inherit;cursor:pointer}
+.ci{width:15cqw;height:15cqw;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;transition:transform .2s}
+.ci svg{width:56%;height:56%}
+.circ:hover .ci{transform:scale(1.06)}
+.cl{font-family:var(--font-caps);font-size:max(9.5px,2cqw);letter-spacing:.14em;text-transform:uppercase;text-align:center}
+.actions { display: flex; flex-wrap: wrap; gap: 1.8cqw; justify-content: center; margin-top: .6cqw; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 3.4cqw;
+  font-family: var(--font-caps); font-weight: 600; font-size: max(10.5px, 1.95cqw); letter-spacing: .12em; text-transform: uppercase;
+  color: #fff; background: var(--ink); border: 1px solid var(--ink); border-radius: 99px; text-decoration: none;
+  transition: background .2s, color .2s;
+}
+.btn:hover { background: #4f0f26; }
+.btn.ghost { background: transparent; color: var(--ink); border-color: var(--gold); }
+.btn.ghost:hover { background: rgba(169, 129, 47, .14); }
+.btn:focus-visible, .dot:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+.script-title { font-family: var(--font-display); font-size: max(40px, 8.6cqw); line-height: 1.12; color: var(--ink); }
+.sub { font-style: italic; font-size: max(15px, 3.2cqw); color: var(--ink-soft); }
+.count { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.7cqw; width: 56cqw; margin-top: .6cqw; }
+.cell {
+  display: flex; flex-direction: column; align-items: center; gap: .5cqw; padding: 2.2cqw 0 1.6cqw;
+  border: 1px solid var(--gold-soft); border-radius: 99px 99px 1.4cqw 1.4cqw; background: rgba(255, 249, 244, .55);
+}
+.num { font-size: max(24px, 7.4cqw); line-height: 1; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--ink); }
+.num.tick { animation: tick .45s ease-out; }
+@keyframes tick { from { opacity: .1; transform: translateY(-35%); } to { opacity: 1; transform: translateY(0); } }
+.lab { font-family: var(--font-caps); font-weight: 500; font-size: max(8.5px, 1.45cqw); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); }
+.when { font-size: max(14px, 2.8cqw); font-weight: 500; letter-spacing: .02em; }
+
+
+.filho, .parents, .family li { text-shadow: 0 0 .6em rgba(236,190,88,.55), 0 0 1.4em rgba(240,200,110,.4); }
+.family { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1cqw; font-size: max(15px, 3.1cqw); font-weight: 500; }
+.valid { font-family: var(--font-caps); font-weight: 600; font-size: max(10.5px, 2cqw); letter-spacing: .18em; text-transform: uppercase; padding: 1.4cqw 3.4cqw; border: 1px solid var(--gold); border-radius: 99px; }
+.close { font-size: max(16px, 3.4cqw); line-height: 1.38; max-width: 48cqw; }
+
+/* ---------- controls ---------- */
+.dots { position: absolute; z-index: 3; left: 50.3%; bottom: 4.6%; transform: translateX(-50%); display: flex; gap: 0; }
+.dot { width: 28px; height: 28px; display: grid; place-items: center; background: none; border: 0; padding: 0; cursor: pointer; }
+.dot::before { content: ""; width: 7px; height: 7px; border-radius: 50%; border: 1px solid var(--gold); background: transparent; transition: background .25s, transform .25s; }
+.dot[aria-current="true"]::before { background: var(--gold); transform: scale(1.3); }
+.cue {
+  position: absolute; z-index: 3; left: 50.3%; bottom: 9.4%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 4px;
+  font-family: var(--font-caps); font-weight: 600; font-size: max(9.5px, 1.7cqw); letter-spacing: .24em; text-transform: uppercase; color: var(--ink); pointer-events: none;
+}
+.cue svg { width: 18px; height: 18px; fill: none; stroke: var(--gold); stroke-width: 1.8; animation: nudge 1.6s ease-in-out infinite; }
+@keyframes nudge { 0%, 100% { transform: translateY(0); opacity: .5; } 50% { transform: translateY(5px); opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .glow, .cue svg, .invoc { animation: none; }
+  .num.tick { animation: none; }
+}
+</style>
+<noscript>
+<style>
+.story { height: auto; }
+.pin { position: relative; height: auto; }
+.stage { position: relative; left: auto; top: auto; transform: none; width: 100%; height: auto; container-type: normal; }
+.bgwrap { display: none; }
+.invoc, .panel { position: static; transform: none; width: auto; height: auto; padding: 24px; opacity: 1 !important; }
+.dots, .cue { display: none; }
+</style>
+</noscript>
+</head>
+<body>
+<main class="story" id="story">
+  <div class="pin" id="pin">
+    <h1 class="sr-only">Convite para o Nikkah de Katyja Ibrahimo e Ali Krayem, sexta-feira, 11 de Dezembro de 2026</h1>
+    <div class="amb" aria-hidden="true"></div>
+    <div class="stage" id="stage">
+      <div class="bgwrap" id="bgwrap" aria-hidden="true">
+        <img class="bg" src="assets/bg.jpg" alt="" width="1024" height="1536">
+        <div class="glow g1"></div>
+        <div class="glow g2"></div>
+      </div>
+      <canvas id="petals" aria-hidden="true"></canvas>
+
+      <div class="invoc">
+        <p>Em nome de Allah, o Beneficente, o Misericordioso…</p>
+        <div class="rule" aria-hidden="true"><i></i><b></b><i></i></div>
+      </div>
+
+      <section class="panel" aria-label="Convite">
+        <p class="parents">Omar Fahar Ibrahimo (Marhum)<span class="amp">&amp;</span>Farana de Andrade</p>
+        <p class="caps">Têm a honra de convidar</p>
+        <div class="rule" aria-hidden="true"><i></i><b></b><i></i></div>
+        <p class="lead">o Exmo. Sr./Sra. e sua família ao enlace matrimonial Sunnat Nikkah da sua filha:</p>
+      </section>
+
+      <section class="panel" aria-label="Os noivos">
+        <div class="names">
+          <span class="n" data-wipe="0">Katyja Ibrahimo</span>
+          <span class="amp2" aria-hidden="true">&amp;</span>
+          <span class="n" data-wipe="1">Ali Krayem</span>
+        </div>
+        <p class="filho">Filho de Nasrat Krayem &amp; Dhahbiya Ghribi</p>
+      </section>
+
+      <section class="panel" aria-label="Versículo">
+        <div class="rule" aria-hidden="true"><i></i><b></b><i></i></div>
+        <blockquote class="quote" style="margin:0">“Foi ELE quem vos criou de uma só alma e dela criou a sua companheira, para que nela habitasse em segurança…”</blockquote>
+        <p class="cite">Surah Al-A’raf 7:189 – Alcorão</p>
+        <div class="rule" aria-hidden="true"><i></i><b></b><i></i></div>
+      </section>
+
+      <section class="panel" aria-label="Data, hora e local">
+        <ul class="details">
+          <li>
+            <svg class="ico" viewBox="0 0 32 32" aria-hidden="true">
+              <path class="draw" pathLength="1" d="M5 9h22a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V11a2 2 0 0 1 2-2z"/>
+              <path class="draw" pathLength="1" d="M3 15h26M10 5v6M22 5v6"/>
+              <path class="draw" pathLength="1" d="M9 21h2M15 21h2M21 21h2M9 25h2M15 25h2"/>
+            </svg>
+            <div><span class="k">Data</span><span class="v">Sexta-feira, 11 de Dezembro de 2026</span></div>
+          </li>
+          <li>
+            <svg class="ico" viewBox="0 0 32 32" aria-hidden="true">
+              <circle class="draw" pathLength="1" cx="16" cy="16" r="13"/>
+              <path class="draw" pathLength="1" d="M16 8v8l5.5 3.5"/>
+            </svg>
+            <div><span class="k">Hora</span><span class="v">18:00 horas</span></div>
+          </li>
+          <li>
+            <svg class="ico" viewBox="0 0 32 32" aria-hidden="true">
+              <path class="draw" pathLength="1" d="M16 29s10-8.6 10-16A10 10 0 0 0 6 13c0 7.4 10 16 10 16z"/>
+              <circle class="draw" pathLength="1" cx="16" cy="13" r="3.6"/>
+            </svg>
+            <div><span class="k">Local</span><span class="v">Mesquita Shia, Nacala Porto</span><span class="s">Cidade Baixa, em frente à Tmcel</span></div>
+          </li>
+        </ul>
+        <div class="circles">
+          <a class="circ" href="https://www.google.com/maps/search/?api=1&amp;query=Mesquita+Shia+Nacala+Porto+Mo%C3%A7ambique" target="_blank" rel="noopener"><span class="ci"><svg viewBox="0 0 48 48" fill="currentColor"><path d="M9 40V20l3-5 3 5v20zM17 40V28c0-6 3-9 8-12 5 3 8 6 8 12v12zM25 8v4M24 6h2v3h-2z"/></svg></span><span class="cl">Como chegar</span></a>
+          <a class="circ" href="https://wa.me/258849089160?text=Confirmo%20a%20minha%20presen%C3%A7a%20no%20Nikkah%20de%20Katyja%20e%20Ali%2C%2011%20de%20Dezembro%20de%202026." target="_blank" rel="noopener"><span class="ci"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="20" cy="15" r="7"/><path d="M7 40c1-8 6-12 13-12s12 4 13 12zM31 22l4 4 8-9"/></svg></span><span class="cl">Confirmar presença</span></a>
+        <button class="circ" type="button" id="gift-open"><span class="ci"><svg viewBox="0 0 48 48" fill="currentColor"><path d="M6 17h36v9H6zM9 28h30v14H9zM22 17h4v25h-4zM24 16c-3-8-12-7-10-2 1 3 7 3 10 2zM24 16c3-8 12-7 10-2-1 3-7 3-10 2z"/></svg></span><span class="cl">Lista de presentes</span></button>
+        </div>
+        <div class="actions"><a class="btn ghost" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Nikkah+de+Katyja+e+Ali&amp;dates=20261211T160000Z%2F20261211T180000Z&amp;location=Mesquita+Shia%2C+Nacala+Porto%2C+Cidade+Baixa%2C+em+frente+%C3%A0+Tmcel&amp;details=Convite+para+o+Nikkah+de+Katyja+Ibrahimo+e+Ali+Krayem" target="_blank" rel="noopener">Guardar no calendário</a></div>
+      </section>
+
+      <section class="panel" aria-label="Contagem decrescente">
+        <p class="script-title">A contagem decrescente começou</p>
+        <p class="sub">in sha Allah</p>
+        <div class="count" role="timer" aria-label="Tempo até ao Nikkah">
+          <div class="cell"><span class="num" id="cd-d">00</span><span class="lab">Dias</span></div>
+          <div class="cell"><span class="num" id="cd-h">00</span><span class="lab">Horas</span></div>
+          <div class="cell"><span class="num" id="cd-m">00</span><span class="lab">Min</span></div>
+          <div class="cell"><span class="num" id="cd-s">00</span><span class="lab">Seg</span></div>
+        </div>
+        <p class="when" id="cd-when">11 de Dezembro de 2026 · 18:00</p>
+      </section>
+
+      <section class="panel" aria-label="Família e agradecimento">
+        <p class="caps">Com os cumprimentos da família</p>
+        <ul class="family">
+          <li>Fahar Omar Ibrahimo (Marhum) &amp; Madina Ibrahimo</li>
+          <li>Orlando H. P. L. de Andrade &amp; Eva H. Mussagy (Marhuma)</li>
+        </ul>
+        <div class="rule" aria-hidden="true"><i></i><b></b><i></i></div>
+        <p class="close">Será uma honra contar com a vossa presença neste dia muito especial para nós…</p>
+        <p class="valid">Válido para 2 pessoas</p>
+      </section>
+
+      <div class="cue" id="cue" aria-hidden="true">
+        <span>Deslize</span>
+        <svg viewBox="0 0 20 20"><path d="M4 7l6 6 6-6"/></svg>
+      </div>
+      <nav class="dots" id="dots" aria-label="Secções do convite"></nav>
+    </div>
+  </div>
+</main>
+
+<script>
+(function () {
+  document.documentElement.classList.add('js');
+  var story = document.getElementById('story');
+  var bgwrap = document.getElementById('bgwrap');
+  var cue = document.getElementById('cue');
+  var dotsEl = document.getElementById('dots');
+  var panels = Array.prototype.slice.call(document.querySelectorAll('.panel'));
+  var wipes = Array.prototype.slice.call(document.querySelectorAll('[data-wipe]'));
+  var draws = Array.prototype.slice.call(document.querySelectorAll('.ico .draw'));
+  var N = panels.length;
+  var seg = 1 / N;
+  var mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var reduce = mq.matches;
+  if (mq.addEventListener) mq.addEventListener('change', function (e) { reduce = e.matches; update(); });
+
+  function clamp(x) { return Math.min(1, Math.max(0, x)); }
+  function ease(x) { x = clamp(x); return x * x * (3 - 2 * x); }
+
+  // navigation dots
+  var dots = panels.map(function (panel, i) {
+    var b = document.createElement('button');
+    b.className = 'dot'; b.type = 'button';
+    b.setAttribute('aria-label', panel.getAttribute('aria-label'));
+    b.addEventListener('click', function () { goTo(i); });
+    dotsEl.appendChild(b);
+    return b;
+  });
+  function goTo(i) {
+    var total = story.offsetHeight - window.innerHeight;
+    var top = story.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({ top: top + (i + 0.5) * seg * total, behavior: reduce ? 'auto' : 'smooth' });
+  }
+
+  var ticking = false;
+  function update() {
+    ticking = false;
+    var r = story.getBoundingClientRect();
+    var total = story.offsetHeight - window.innerHeight;
+    var p = clamp(-r.top / total);
+
+    if (!reduce) bgwrap.style.transform = 'scale(' + (1 + 0.05 * p).toFixed(4) + ') translateY(' + (-0.8 * p).toFixed(3) + '%)';
+    else bgwrap.style.transform = 'none';
+    cue.style.opacity = String(1 - ease(p / 0.04));
+
+    var active = Math.min(N - 1, Math.floor(p * N));
+    for (var i = 0; i < N; i++) {
+      var start = i * seg, end = (i + 1) * seg;
+      var fin = i === 0 ? 0 : seg * 0.22;
+      var fout = i === N - 1 ? 0 : seg * 0.22;
+      var inA = fin === 0 ? 1 : ease((p - start) / fin);
+      var outA = fout === 0 ? 1 : 1 - ease((p - (end - fout)) / fout);
+      var a = inA * outA;
+      var el = panels[i];
+      var dy = reduce ? 0 : (1 - inA) * 18 - (1 - outA) * 18;
+      el.style.opacity = a.toFixed(3);
+      el.style.transform = 'translate(-50%,' + dy.toFixed(1) + 'px)';
+      el.style.filter = (reduce || a > 0.98) ? 'none' : 'blur(' + ((1 - a) * 3).toFixed(1) + 'px)';
+      el.style.visibility = a < 0.01 ? 'hidden' : 'visible';
+      el.style.pointerEvents = a > 0.6 ? 'auto' : 'none';
+      el.setAttribute('aria-hidden', a < 0.5 ? 'true' : 'false');
+      dots[i].setAttribute('aria-current', i === active ? 'true' : 'false');
+    }
+
+    // names wipe (panel 1)
+    var lp1 = clamp((p - 1 * seg) / seg);
+    wipes.forEach(function (w, k) {
+      var t = reduce ? 1 : ease((lp1 - (0.08 + k * 0.16)) / 0.22);
+      w.style.clipPath = 'inset(-30% ' + ((1 - t) * 110).toFixed(1) + '% -30% -10%)';
+    });
+    // icons draw (panel 3)
+    var lp3 = clamp((p - 3 * seg) / seg);
+    var dd = reduce ? 1 : ease((lp3 - 0.04) / 0.3);
+    draws.forEach(function (d) { d.style.strokeDashoffset = String((1 - dd).toFixed(3)); });
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update();
+
+  // countdown to 11 Dec 2026, 18:00 Maputo time
+  var target = new Date('2026-12-11T18:00:00+02:00').getTime();
+  var cd = { d: document.getElementById('cd-d'), h: document.getElementById('cd-h'), m: document.getElementById('cd-m'), s: document.getElementById('cd-s') };
+  var when = document.getElementById('cd-when');
+  function pad(n) { return n < 10 ? '0' + n : String(n); }
+  function setNum(el, v) {
+    if (el.textContent !== v) {
+      el.textContent = v;
+      if (!reduce) { el.classList.remove('tick'); void el.offsetWidth; el.classList.add('tick'); }
+    }
+  }
+  function tickCountdown() {
+    var diff = Math.max(0, target - Date.now());
+    var s = Math.floor(diff / 1000);
+    setNum(cd.d, pad(Math.floor(s / 86400)));
+    setNum(cd.h, pad(Math.floor(s % 86400 / 3600)));
+    setNum(cd.m, pad(Math.floor(s % 3600 / 60)));
+    setNum(cd.s, pad(s % 60));
+    if (diff === 0) when.textContent = 'Hoje é o grande dia';
+  }
+  tickCountdown();
+  setInterval(tickCountdown, 1000);
+
+  // falling petals behind the text
+  var canvas = document.getElementById('petals');
+  var ctx = canvas.getContext('2d');
+  var petals = [], W = 0, H = 0, dpr = 1, running = false, last = 0;
+  var colors = ['#fbf1ea', '#f1d3d6', '#d98a98', '#a8344f', '#ffffff'];
+  function size() {
+    var rect = canvas.getBoundingClientRect();
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    W = rect.width; H = rect.height;
+    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+  }
+  function seed() {
+    petals = [];
+    var n = W < 420 ? 6 : 8;
+    for (var i = 0; i < n; i++) petals.push(newPetal(true));
+  }
+  function newPetal(anywhere) {
+    return {
+      x: Math.random() * W, y: anywhere ? Math.random() * H : -20,
+      s: 5 + Math.random() * 6, vy: 9 + Math.random() * 10, sway: 10 + Math.random() * 22, f: .4 + Math.random() * .6,
+      ph: Math.random() * 6.28, rot: Math.random() * 6.28, vr: (Math.random() - .5) * 1.4,
+      c: colors[Math.floor(Math.random() * colors.length)], a: .35 + Math.random() * .3
+    };
+  }
+  function drawPetal(q, t) {
+    var x = q.x + Math.sin(t * q.f + q.ph) * q.sway;
+    ctx.save();
+    ctx.translate(x, q.y); ctx.rotate(q.rot); ctx.globalAlpha = q.a; ctx.fillStyle = q.c;
+    var s = q.s;
+    ctx.beginPath();
+    ctx.moveTo(0, -s);
+    ctx.bezierCurveTo(s * .9, -s * .6, s * .8, s * .7, 0, s);
+    ctx.bezierCurveTo(-s * .8, s * .7, -s * .9, -s * .6, 0, -s);
+    ctx.fill();
+    ctx.restore();
+  }
+  function frame(ts) {
+    if (!running) return;
+    var t = ts / 1000, dt = Math.min(.05, (ts - last) / 1000 || .016);
+    last = ts;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < petals.length; i++) {
+      var q = petals[i];
+      q.y += q.vy * dt; q.rot += q.vr * dt;
+      if (q.y > H + 20) petals[i] = q = newPetal(false);
+      drawPetal(q, t);
+    }
+    requestAnimationFrame(frame);
+  }
+  function startPetals() {
+    if (running || reduce || document.hidden) return;
+    size(); seed(); running = true; last = performance.now(); requestAnimationFrame(frame);
+  }
+  function stopPetals() { running = false; ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, canvas.width, canvas.height); }
+  document.addEventListener('visibilitychange', function () { document.hidden ? stopPetals() : startPetals(); });
+  window.addEventListener('resize', function () { if (running) { size(); seed(); } });
+  if (mq.addEventListener) mq.addEventListener('change', function (e) { e.matches ? stopPetals() : startPetals(); });
+  startPetals();
+})();
+</script>
+
+<dialog id="gift" aria-label="Lista de presentes">
+  <p class="gt">Lista de presentes</p>
+  <p class="gs">Transferência bancária — Millennium bim</p>
+  <dl>
+    <dt>1º Titular</dt><dd>KATYJA OMAR FAHAR IBRAHIMO</dd>
+    <dt>NIB</dt><dd data-copy>0001 0000 0120 2727 8335 7</dd>
+    <dt>NUIB</dt><dd data-copy>201910004881287</dd>
+    <dt>IBAN</dt><dd data-copy>MZ59 0001 0000 0120 2727 8335 7</dd>
+    <dt>SWIFT</dt><dd data-copy>BIMOMZMXXXX</dd>
+  </dl>
+  <p class="gh">Toque num número para copiar.</p>
+  <a class="btn" href="https://wa.me/258878727280?text=Ol%C3%A1%2C%20segue%20o%20comprovativo%20do%20presente%20para%20a%20Katyja%20e%20o%20Ali." target="_blank" rel="noopener">Enviar comprovativo no WhatsApp</a>
+  <button class="btn ghost" type="button" id="gift-close">Fechar</button>
+</dialog>
+<script>
+(function(){var d=document.getElementById('gift');if(!d)return;
+document.getElementById('gift-open').onclick=function(){try{d.showModal()}catch(e){d.setAttribute('open','')}};
+document.getElementById('gift-close').onclick=function(){d.close?d.close():d.removeAttribute('open')};
+d.addEventListener('click',function(e){if(e.target===d&&d.close)d.close()});
+d.querySelectorAll('[data-copy]').forEach(function(el){el.onclick=function(){var t=el.textContent,o=t;
+try{navigator.clipboard.writeText(t).then(function(){el.textContent='Copiado ✓';setTimeout(function(){el.textContent=o},1200)})}catch(e){}}});})();
+</script>
+</body>
+</html>
